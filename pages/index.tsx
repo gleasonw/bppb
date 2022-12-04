@@ -1,5 +1,5 @@
-import PBcourts from "./PBcourts";
-import { Weather } from "./Weather";
+import PBcourts from "../components/PBcourts";
+import { Weather } from "../components/Weather";
 
 export default function Home() {
   return (
