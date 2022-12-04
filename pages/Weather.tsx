@@ -2,11 +2,8 @@ import React from "react";
 import useSWR from "swr";
 import styles from "../styles/Home.module.css";
 import HourForecast from "./HourForecast";
+import fetcher from "./fetcher";
 
-interface ForecastProperties {
-  elevation?: number;
-  periods: ForecastPeriod;
-}
 
 interface ForecastPeriod {
   number: number;
@@ -27,29 +24,25 @@ interface ForecastPeriod {
 export const Weather: React.FC = () => {
   const url = "https://api.weather.gov/gridpoints/SEW/118,69/forecast";
 
-  const { data, error } = useSWR(url, async (url) => {
-    const res = await fetch(url);
-    const json = await res.json();
-    const forecastData: ForecastPeriod[] = json.properties.periods;
-    return forecastData;
-  });
+  const { data, error } = useSWR(url, fetcher);
 
   if (!data) return <div>loading weather...</div>;
 
-  const focusForecast = data[0];
+  const forecast: ForecastPeriod[] = data.properties.periods;
+  const focusForecast: ForecastPeriod = forecast[0];
 
   return (
     <div className="flex flex-col justify-center items-center">
+      <HourForecast />
       <div className={styles.card}>
         <h1 className="text-3xl">{focusForecast.name}</h1>
         <p className="text-4xl">{focusForecast.temperature}</p>
         <p>{focusForecast.windSpeed}</p>
         <p>{focusForecast.shortForecast}</p>
         <img src={focusForecast.icon} alt={focusForecast.shortForecast}></img>
-        <HourForecast/>
       </div>
       <div className={"flex flex-wrap"}>
-        {data.slice(1).map((forecast: ForecastPeriod) => {
+        {forecast.slice(1).map((forecast: ForecastPeriod) => {
           if (forecast.isDaytime) {
             return (
               <div key={forecast.number} className={styles.card}>

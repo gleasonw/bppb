@@ -2,7 +2,7 @@ import React from "react";
 
 export const PBcourts: React.FC = () => {
   // re render every minute
-  const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+  const [time, setTime] = React.useState<string>(new Date().toLocaleTimeString());
   React.useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date().toLocaleTimeString());
@@ -12,7 +12,7 @@ export const PBcourts: React.FC = () => {
   console.log("re render");
   return (
       <img
-        src={`http://drive.google.com/uc?time=${time}?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk`}
+        src={`http://drive.google.com/uc?time=${time.slice(0,5)}?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk`}
         alt="Battle Point PB"
         className="mx-auto"
       />
