@@ -15,7 +15,7 @@ export const PBcourts: React.FC = () => {
     <iframe
       src={`https://drive.google.com/file/d/1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk/preview?time=${time}`}
       width="640"
-      height="480"
+      height="300"
       allow="autoplay" 
       className='mx-auto'
       />
