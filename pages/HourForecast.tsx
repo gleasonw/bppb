@@ -31,7 +31,7 @@ export const HourForecast: React.FC = () => {
     <div className='flex overflow-scroll flex-wrap gap-10px'>
       {trimmedForecast.map((forecast: ForecastPeriod) => {
         return (
-          <div key={forecast.number} className='flex flex-col justify-center items-center mx-auto'>
+          <div key={forecast.number} className='flex flex-col justify-center items-center mx-auto p-5'>
             <h1>{forecast.startTime.slice(11,16)}</h1>
             <p>{forecast.temperature}</p>
             <p>{forecast.windSpeed}</p>
