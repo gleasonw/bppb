@@ -8,12 +8,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'api.weather.gov',
         pathname: '/icons/**',
-        port: '',
       },
       {
         protocol: 'https',
         hostname: 'drive.google.com',
-        port: '',
         pathname: '/uc/**',
       },
     ],
