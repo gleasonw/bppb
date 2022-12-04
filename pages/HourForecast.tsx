@@ -1,6 +1,7 @@
 import React from "react";
 import fetcher from "./fetcher";
 import useSWR from "swr";
+import Image from "next/image";
 
 interface ForecastPeriod {
   number: number;
@@ -17,7 +18,7 @@ export const HourForecast: React.FC = () => {
   const url = 'https://api.weather.gov/gridpoints/SEW/118,69/forecast/hourly';
 
   const { data, error } = useSWR(url, fetcher);
-  
+
   if (!data) return <div>loading hourly forecast...</div>;
 
   const forecast: ForecastPeriod[] = data.properties.periods;
@@ -32,11 +33,16 @@ export const HourForecast: React.FC = () => {
       {trimmedForecast.map((forecast: ForecastPeriod) => {
         return (
           <div key={forecast.number} className='flex flex-col justify-center items-center mx-auto p-5'>
-            <h1>{forecast.startTime.slice(11,16)}</h1>
+            <h1>{forecast.startTime.slice(11, 16)}</h1>
             <p>{forecast.temperature}</p>
             <p>{forecast.windSpeed}</p>
             <p>{forecast.shortForecast}</p>
-            <img src={forecast.icon} alt={forecast.shortForecast}></img>
+            <Image
+              src={forecast.icon}
+              alt={forecast.shortForecast}
+              width={50}
+              height={50}
+            />
           </div>
         );
       })}

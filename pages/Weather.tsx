@@ -3,6 +3,7 @@ import useSWR from "swr";
 import styles from "../styles/Home.module.css";
 import HourForecast from "./HourForecast";
 import fetcher from "./fetcher";
+import Image from "next/image";
 
 
 interface ForecastPeriod {
@@ -39,7 +40,7 @@ export const Weather: React.FC = () => {
         <p className="text-4xl">{focusForecast.temperature}</p>
         <p>{focusForecast.windSpeed}</p>
         <p>{focusForecast.shortForecast}</p>
-        <img src={focusForecast.icon} alt={focusForecast.shortForecast}></img>
+        <Image src={focusForecast.icon} height={50} width={50} alt={focusForecast.shortForecast}/>
       </div>
       <div className={"flex flex-wrap"}>
         {forecast.slice(1).map((forecast: ForecastPeriod) => {
@@ -50,7 +51,7 @@ export const Weather: React.FC = () => {
                 <p>{forecast.temperature}</p>
                 <p>{forecast.windSpeed}</p>
                 <p>{forecast.shortForecast}</p>
-                <img src={forecast.icon} alt={forecast.shortForecast}></img>
+                <Image height={50} width={50} src={forecast.icon} alt={forecast.shortForecast}/>
               </div>
             );
           }

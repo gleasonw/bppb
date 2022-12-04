@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export const PBcourts: React.FC = () => {
   // re render every minute
@@ -11,10 +12,12 @@ export const PBcourts: React.FC = () => {
   }, []);
   console.log("re render");
   return (
-    <img
-      src={`http://drive.google.com/uc?time=${time}?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk`}
+    <Image
+      src={`https://drive.google.com/uc?time=${time}?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk`}
       alt="Battle Point PB"
       className="mx-auto"
+      width={1000}
+      height={1000}
     />
   );
 };
