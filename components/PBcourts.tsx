@@ -12,13 +12,13 @@ export const PBcourts: React.FC = () => {
   }, []);
   console.log("re render");
   return (
-    <Image
-      src={`https://drive.google.com/uc?time=${time}?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk`}
-      alt="Battle Point PB"
-      className="mx-auto"
-      width={1000}
-      height={1000}
-    />
+    <iframe
+      src={`https://drive.google.com/file/d/1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk/preview?time=${time}`}
+      width="640"
+      height="480"
+      allow="autoplay" 
+      className='mx-auto'
+      />
   );
 };
 
