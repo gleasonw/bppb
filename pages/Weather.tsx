@@ -60,3 +60,5 @@ export const Weather: React.FC = () => {
     </div>
   );
 };
+
+export default Weather;
