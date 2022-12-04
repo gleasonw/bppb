@@ -11,11 +11,11 @@ export const PBcourts: React.FC = () => {
   }, []);
   console.log("re render");
   return (
-      <img
-        src={`http://drive.google.com/uc?time=${time.slice(0,5)}?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk`}
-        alt="Battle Point PB"
-        className="mx-auto"
-      />
+    <img
+      src={`http://drive.google.com/uc?time=${time}?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk`}
+      alt="Battle Point PB"
+      className="mx-auto"
+    />
   );
 };
 
