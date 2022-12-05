@@ -1,9 +1,8 @@
 import React, { ReactComponentElement } from "react";
 import useSWR from "swr";
-import styles from "../styles/Home.module.css";
+import styles from "../Home.module.css";
 import HourForecast from "./HourForecast";
 import fetcher from "./fetcher";
-import Image from "next/image";
 
 interface ForecastPeriod {
   number: number;
@@ -32,7 +31,7 @@ export const Weather: React.FC = () => {
   const focusForecast: ForecastPeriod = forecast[0];
 
   const icon = (url: string, alt: string) => (
-    <Image src={url} height={100} width={100} alt={alt} className="mx-auto" />
+    <img src={url} height={100} width={100} alt={alt} className="mx-auto" />
   );
 
   return (
@@ -45,10 +44,8 @@ export const Weather: React.FC = () => {
         {icon(focusForecast.icon, focusForecast.shortForecast)}
       </div>
       <HourForecast />
-      <h1 className='p-20 text-5xl'>
-        Weather for the Week
-      </h1>
-      <div className={"flex flex-wrap"}>
+      <h1 className="p-20 text-5xl">Weather for the Week</h1>
+      <div className={"flex overflow-auto w-full"}>
         {forecast.slice(1).map((forecast: ForecastPeriod) => {
           if (forecast.isDaytime) {
             return (

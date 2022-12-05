@@ -1,7 +1,6 @@
 import React from "react";
 import fetcher from "./fetcher";
 import useSWR from "swr";
-import Image from "next/image";
 
 interface ForecastPeriod {
   number: number;
@@ -29,7 +28,7 @@ export const HourForecast: React.FC = () => {
   console.log(trimmedForecast[0].startTime);
 
   return (
-    <div className='flex overflow-scroll flex-wrap gap-10px'>
+    <div className='flex overflow-x-auto gap-10px w-full'>
       {trimmedForecast.map((forecast: ForecastPeriod) => {
         return (
           <div key={forecast.number} className='flex flex-col justify-center items-center mx-auto p-5'>
@@ -37,7 +36,7 @@ export const HourForecast: React.FC = () => {
             <p>{forecast.temperature}</p>
             <p>{forecast.windSpeed}</p>
             <p>{forecast.shortForecast}</p>
-            <Image
+            <img
               src={forecast.icon}
               alt={forecast.shortForecast}
               width={50}

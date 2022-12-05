@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 export const PBcourts: React.FC = () => {
   const [nextCacheAge, setNextCacheAge] = React.useState(new Date());
@@ -15,8 +14,8 @@ export const PBcourts: React.FC = () => {
   }, [nextCacheAge]);
 
   return (
-    <div className="w-4/5 mx-auto">
-      <Image
+    <div className="mx-auto">
+      <img
         src={`https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk&time=${nextCacheAge.toLocaleString().slice(11, 16)}`}
         width={1000}
         height={500}
