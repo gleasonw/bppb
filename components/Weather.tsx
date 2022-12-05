@@ -45,6 +45,9 @@ export const Weather: React.FC = () => {
         {icon(focusForecast.icon, focusForecast.shortForecast)}
       </div>
       <HourForecast />
+      <h1 className='p-20 text-5xl'>
+        Weather for the Week
+      </h1>
       <div className={"flex flex-wrap"}>
         {forecast.slice(1).map((forecast: ForecastPeriod) => {
           if (forecast.isDaytime) {
