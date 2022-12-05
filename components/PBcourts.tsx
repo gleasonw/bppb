@@ -14,13 +14,12 @@ export const PBcourts: React.FC = () => {
   }, []);
   console.log("re render");
   return (
-    <div className='w-4/5 mx-auto'> 
-      <iframe
-        src={`https://drive.google.com/file/d/1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk/preview?time=${time}`}
-        allow="autoplay"
-        width={"100%"}
-        height={400}
-        className="mx-auto"
+    <div className="w-4/5 mx-auto">
+      <Image
+        src={`https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk&time=${time}`}
+        width={1000}
+        height={500}
+        alt="PB Courts"
       />
     </div>
   );
