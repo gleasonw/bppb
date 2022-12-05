@@ -17,7 +17,7 @@ export const PBcourts: React.FC = () => {
   return (
     <div className="w-4/5 mx-auto">
       <Image
-        src={`https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk&time=${nextCacheAge}`}
+        src={`https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk&time=${nextCacheAge.toLocaleString().slice(11, 16)}`}
         width={1000}
         height={500}
         alt="PB Courts"
