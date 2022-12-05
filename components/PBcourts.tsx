@@ -2,17 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 export const PBcourts: React.FC = () => {
-  // re render every minute
-  const [time, setTime] = React.useState<string>(
-    new Date().toLocaleTimeString()
-  );
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
-  console.log("re render");
+  const [time, setTime] = React.useState(new Date().toLocaleTimeString());
   return (
     <div className="w-4/5 mx-auto">
       <Image
