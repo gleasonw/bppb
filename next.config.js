@@ -15,6 +15,7 @@ const nextConfig = {
         pathname: '/uc/**',
       },
     ],
+    minimumCacheTTL: 60
   },
 }
 
