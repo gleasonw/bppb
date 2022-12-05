@@ -36,7 +36,7 @@ export const Weather: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center text-slate-50">
       <div className={styles.card}>
         <h1 className="text-3xl">{focusForecast.name}</h1>
         <p className="text-4xl">{focusForecast.temperature}</p>
