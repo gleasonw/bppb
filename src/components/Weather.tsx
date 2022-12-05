@@ -45,7 +45,7 @@ export const Weather: React.FC = () => {
       </div>
       <HourForecast />
       <h1 className="p-20 text-5xl">Weather for the Week</h1>
-      <div className={"flex overflow-auto w-full"}>
+      <div className={"flex overflow-auto w-full justify-between"}>
         {forecast.slice(1).map((forecast: ForecastPeriod) => {
           if (forecast.isDaytime) {
             return (
