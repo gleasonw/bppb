@@ -5,14 +5,14 @@ import useWeather from "./useWeather";
 export const HourForecast: React.FC = () => {
   const url = "https://api.weather.gov/gridpoints/SEW/116,71/forecast/hourly";
 
-  const { data, error } = useWeather(url);
+  const { data } = useWeather(url);
 
   if (!data) return <div>loading hourly forecast...</div>;
 
   const forecast = data.properties ? data.properties.periods : [];
 
   //trim to 12 hours
-  const trimmedForecast = forecast ? forecast.slice(0, 12) : [];
+  const trimmedForecast = forecast ? forecast.slice(0, 8) : [];
 
   return (
     <div className="flex overflow-x-auto gap-10px w-full">
@@ -20,9 +20,9 @@ export const HourForecast: React.FC = () => {
         return (
           <div
             key={forecast.number}
-            className="flex flex-col justify-center items-center mx-auto p-5"
+            className="flex flex-col justify-center items-center mx-auto p-7 gap-2 justify-between"
           >
-            <h1>{forecast.startTime && forecast.startTime.slice(11, 16)}</h1>
+            <h1 className='text-2xl'>{forecast.startTime && forecast.startTime.slice(11, 16)}</h1>
             <p>{forecast.temperature}</p>
             <p>{forecast.windSpeed}</p>
             <p>{forecast.shortForecast}</p>
