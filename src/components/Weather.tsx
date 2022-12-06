@@ -4,6 +4,12 @@ import styles from "../Home.module.css";
 import HourForecast from "./HourForecast";
 import fetcher from "./fetcher";
 
+interface ForecastBatch {
+  properties?: {
+    periods: ForecastPeriod[];
+  };
+}
+
 interface ForecastPeriod {
   number: number;
   name: string;
@@ -26,8 +32,11 @@ export const Weather: React.FC = () => {
   const { data, error } = useSWR(url, fetcher);
 
   if (!data) return <div>loading weather...</div>;
+  const batch = data as ForecastBatch;
 
-  const forecast: ForecastPeriod[] = data.properties.periods;
+  const forecast: ForecastPeriod[] = batch.properties
+    ? batch.properties.periods
+    : [];
   const focusForecast: ForecastPeriod = forecast[0];
 
   const icon = (url: string, alt: string) => (
