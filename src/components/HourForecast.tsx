@@ -4,15 +4,12 @@ import useWeather from "./useWeather";
 
 export const HourForecast: React.FC = () => {
   const url = "https://api.weather.gov/gridpoints/SEW/116,71/forecast/hourly";
-
   const { data } = useWeather(url);
 
   if (!data) return <div>loading hourly forecast...</div>;
 
   const forecast = data.properties ? data.properties.periods : [];
-
-  //trim to 12 hours
-  const trimmedForecast = forecast ? forecast.slice(0, 8) : [];
+  const trimmedForecast = forecast ? forecast.slice(0, 6) : [];
 
   return (
     <div className="flex overflow-x-auto gap-10px w-full">
