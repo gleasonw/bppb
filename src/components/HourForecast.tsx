@@ -14,7 +14,7 @@ interface ForecastPeriod {
 }
 
 export const HourForecast: React.FC = () => {
-  const url = 'https://api.weather.gov/gridpoints/SEW/118,69/forecast/hourly';
+  const url = 'https://api.weather.gov/gridpoints/SEW/116,71/forecast/hourly';
 
   const { data, error } = useSWR(url, fetcher);
 
