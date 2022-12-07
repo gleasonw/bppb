@@ -22,10 +22,6 @@ interface ForecastPeriod {
   detailedForecast?: string;
 }
 
-interface Props {
-  url: string;
-}
-
 function useWeather(url: string): {
   data: ForecastBatch | undefined;
   error: Error | undefined;

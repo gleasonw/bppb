@@ -22,7 +22,7 @@ export const HourForecast: React.FC = () => {
             <h1 className='text-2xl'>{forecast.startTime && forecast.startTime.slice(11, 16)}</h1>
             <p>{forecast.temperature}</p>
             <p>{forecast.windSpeed}</p>
-            <p>{forecast.shortForecast}</p>
+            <p className='text-center'>{forecast.shortForecast}</p>
             <img
               src={forecast.icon}
               alt={forecast.shortForecast}

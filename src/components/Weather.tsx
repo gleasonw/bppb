@@ -18,7 +18,7 @@ export const Weather: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col justify-center items-center text-slate-50">
+    <div className="flex flex-col justify-center items-center text-white">
       {focusForecast && Object.keys(focusForecast).length > 0 && (
         <div className={styles.card}>
           <h1 className="text-3xl">{focusForecast && focusForecast.name}</h1>
@@ -36,10 +36,10 @@ export const Weather: React.FC = () => {
             if (forecast.isDaytime) {
               return (
                 <div key={forecast.number} className={styles.card}>
-                  <h1>{forecast.name}</h1>
-                  <p>{forecast.temperature}</p>
-                  <p>{forecast.windSpeed}</p>
-                  <p>{forecast.shortForecast}</p>
+                  <h1 className='text-center text-xl'>{forecast.name}</h1>
+                  <p className='text-center'>{forecast.temperature}</p>
+                  <p className='text-center'>{forecast.windSpeed}</p>
+                  <p className='text-center'>{forecast.shortForecast}</p>
                   {icon(forecast.icon, forecast.shortForecast)}
                 </div>
               );
