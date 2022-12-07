@@ -1,5 +1,4 @@
 import React from "react";
-import fetcher from "./fetcher";
 import useWeather from "./useWeather";
 
 export const HourForecast: React.FC = () => {
