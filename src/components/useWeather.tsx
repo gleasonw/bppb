@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-interface ForecastBatch {
+export interface ForecastBatch {
   properties?: {
     periods?: ForecastPeriod[];
   };

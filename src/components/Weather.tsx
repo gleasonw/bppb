@@ -1,14 +1,14 @@
 import React, { ReactComponentElement } from "react";
 import styles from "../Home.module.css";
 import HourForecast from "./HourForecast";
-import useWeather from "./useWeather";
+import useWeather, { ForecastBatch } from "./useWeather";
 
 export const Weather: React.FC = () => {
   const url = "https://api.weather.gov/gridpoints/SEW/116,71/forecast";
-
-  const { data } = useWeather(url);
+  const { data, error } = useWeather(url);
 
   if (!data) return <div>loading weather...</div>;
+  console.log(data, error);
 
   const forecast = data.properties ? data.properties.periods : [];
   const focusForecast = forecast && forecast.length > 0 && forecast[0];
@@ -36,10 +36,10 @@ export const Weather: React.FC = () => {
             if (forecast.isDaytime) {
               return (
                 <div key={forecast.number} className={styles.card}>
-                  <h1 className='text-center text-xl'>{forecast.name}</h1>
-                  <p className='text-center'>{forecast.temperature}</p>
-                  <p className='text-center'>{forecast.windSpeed}</p>
-                  <p className='text-center'>{forecast.shortForecast}</p>
+                  <h1 className="text-center text-xl">{forecast.name}</h1>
+                  <p className="text-center">{forecast.temperature}</p>
+                  <p className="text-center">{forecast.windSpeed}</p>
+                  <p className="text-center">{forecast.shortForecast}</p>
                   {icon(forecast.icon, forecast.shortForecast)}
                 </div>
               );
