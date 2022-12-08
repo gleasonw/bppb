@@ -29,6 +29,7 @@ function useWeather(url: string): {
   const { data, error } = useSWR<ForecastBatch, Error>(url, async (url) => {
     const res = await fetch(url);
     const data = await res.json();
+    console.log(data);
     return data;
   });
 
