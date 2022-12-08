@@ -8,7 +8,6 @@ export const Weather: React.FC = () => {
   const { data, error } = useWeather(url);
 
   if (!data) return <div>loading weather...</div>;
-  console.log(data, error);
 
   const forecast = data.properties ? data.properties.periods : [];
   const focusForecast = forecast && forecast.length > 0 && forecast[0];
