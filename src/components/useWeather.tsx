@@ -26,10 +26,18 @@ function useWeather(url: string): {
   data: ForecastBatch | undefined;
   error: Error | undefined;
 } {
+
+  type HttpError = Error & { status?: number };
+
   const { data, error } = useSWR<ForecastBatch, Error>(url, async (url) => {
     const res = await fetch(url);
+    console.log(res)
+    if (!res.ok) {
+      const error: HttpError = new Error("An error occurred while fetching the data.");
+      error.status = res.status;
+      throw error;
+    }
     const data = await res.json();
-    console.log(data);
     return data;
   });
 
