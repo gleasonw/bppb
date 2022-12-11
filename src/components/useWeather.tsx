@@ -31,22 +31,15 @@ function useWeather(url: string): {
 
   const { data, error } = useSWR<ForecastBatch, Error>(url, async (url) => {
     const res = await fetch(url);
-    const data = await res.json();
-    console.log(data);
-    return data;
-  }, {
-    onErrorRetry: (error: HttpError, key, config, revalidate, { retryCount }) => {
-      // Never retry on 404.
-      if (error.status === 404) return;
-
-      // Only retry up to 10 times.
-      if (retryCount >= 10) return;
-
-      // Retry after 5 seconds.
-      setTimeout(() => revalidate({ retryCount }), 5000);
+    console.log(res)
+    if (!res.ok) {
+      const error: HttpError = new Error("An error occurred while fetching the data.");
+      error.status = res.status;
+      throw error;
     }
-  }
-  );
+    const data = await res.json();
+    return data;
+  });
 
   return { data, error };
 }
