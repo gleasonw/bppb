@@ -2,7 +2,7 @@ import React from "react";
 import useWeather from "./useWeather";
 
 export const HourForecast: React.FC = () => {
-  const url = "https://api.weather.gov/gridpoints/SEW/116,71/forecast/hourly";
+  const url = "https://nwsproxy-production.up.railway.app/weather/hour";
   const { data } = useWeather(url);
 
   if (!data) return <div>loading hourly forecast...</div>;

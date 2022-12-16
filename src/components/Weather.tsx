@@ -4,7 +4,7 @@ import HourForecast from "./HourForecast";
 import useWeather, { ForecastBatch } from "./useWeather";
 
 export const Weather: React.FC = () => {
-  const url = "https://api.weather.gov/gridpoints/SEW/116,71/forecast";
+  const url = "https://nwsproxy-production.up.railway.app/weather/week";
   const { data, error } = useWeather(url);
 
   if (!data) return <div className='text-center'>loading weather from NWS...</div>;
