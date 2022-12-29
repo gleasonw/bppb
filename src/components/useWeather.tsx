@@ -6,7 +6,7 @@ export interface ForecastBatch {
   };
 }
 
-interface ForecastPeriod {
+export interface ForecastPeriod {
   number?: number;
   name?: string;
   startTime?: string;
@@ -20,6 +20,7 @@ interface ForecastPeriod {
   icon?: string;
   shortForecast?: string;
   detailedForecast?: string;
+  precipitationProbability?: number;
 }
 
 function useWeather(url: string): {
@@ -31,7 +32,6 @@ function useWeather(url: string): {
 
   const { data, error } = useSWR<ForecastBatch, Error>(url, async (url) => {
     const res = await fetch(url);
-    console.log(res)
     if (!res.ok) {
       const error: HttpError = new Error("An error occurred while fetching the data.");
       error.status = res.status;
