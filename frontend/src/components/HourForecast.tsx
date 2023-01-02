@@ -23,7 +23,7 @@ export const HourForecast: React.FC = () => {
               {forecast.startTime && forecast.startTime.slice(11, 16)}
             </h1>
             <p>{forecast.temperature}</p>
-            <p>{forecast.windSpeed && 'mph'}</p>
+            <p>{forecast.windSpeed && `${forecast.windSpeed} mph`}</p>
             <p className="text-center">{forecast.shortForecast}</p>
             {forecast.precipitationProbability && (
               <p className="text-center">
