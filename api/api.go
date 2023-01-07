@@ -44,6 +44,7 @@ func loopWeatherDataGet(weekChannel chan ForecastBatch, hourChannel chan Forecas
 			return
 		}
 	}
+	nwsWeekData, nwsHourData = getWeather(os.Getenv("FORECAST_OWA"))
 	for {
 		select {
 		case <-ticker.C:
