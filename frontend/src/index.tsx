@@ -1,6 +1,5 @@
 import PBcourts from "./components/PBcourts";
 import { Weather } from "./components/Weather";
-//import github svg from assets
 import github from "./assets/github.svg";
 
 export default function Home() {
