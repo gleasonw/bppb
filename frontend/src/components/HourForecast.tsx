@@ -1,9 +1,8 @@
 import React from "react";
 import useWeather from "./useWeather";
-import { WeatherBrick } from "./Weather";
 
 export const HourForecast: React.FC = () => {
-  const url = "https://gonwsproxy-production.up.railway.app/weather/hour";
+  const url = "https://bppb-production.up.railway.app/weather/hour";
   const { data } = useWeather(url);
 
   if (!data) return <div>loading hourly forecast...</div>;

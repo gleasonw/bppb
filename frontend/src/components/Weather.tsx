@@ -4,11 +4,11 @@ import HourForecast from "./HourForecast";
 import useWeather, { ForecastPeriod } from "./useWeather";
 
 export const Weather: React.FC = () => {
-  const url = "https://gonwsproxy-production.up.railway.app/weather/week";
+  const url = "https://bppb-production.up.railway.app/weather/week";
   const { data, error } = useWeather(url);
 
   if (!data)
-    return <div className="text-center">loading weather from NWS...</div>;
+    return <div className="text-center">loading weather...</div>;
 
   const forecast = data.properties ? data.properties.periods : [];
   const focusForecast = forecast && forecast.length > 0 && forecast[0];
