@@ -121,6 +121,18 @@ func buildForecastPeriod(period map[string]interface{}, index int) ForecastPerio
 	return forecastPeriod
 }
 
+func download_court_image() []byte {
+	resp, err := http.Get("https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk")
+	if err != nil {
+		fmt.Println(err)
+	}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return body
+}
+
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
@@ -129,6 +141,8 @@ func main() {
 	fmt.Println("Hello Railway")
 	weekChannel := make(chan ForecastBatch)
 	hourChannel := make(chan ForecastBatch)
+	var court_image []byte
+	var last_image_update time.Time
 	go loopWeatherDataGet(weekChannel, hourChannel)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -142,6 +156,21 @@ func main() {
 
 	http.HandleFunc("/weather/hour", func(w http.ResponseWriter, r *http.Request) {
 		getForecastAndJsonify(w, hourChannel)
+	})
+
+	http.HandleFunc("/court", func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w)
+		w.Header().Set("Content-Type", "image/png")
+		w.WriteHeader(http.StatusOK)
+
+		if court_image == nil || time.Since(last_image_update) > 2*time.Minute {
+			court_image = download_court_image()
+			last_image_update = time.Now()
+		}
+		_, err := w.Write(court_image)
+		if err != nil {
+			fmt.Println(err)
+		}
 	})
 
 	port := os.Getenv("PORT")
