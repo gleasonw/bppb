@@ -5,14 +5,17 @@ export const PBcourts: React.FC = () => {
 
   //ensure the image is updated every 2 minutes
   React.useEffect(() => {
-    const interval = setInterval(() => setTime(new Date().toLocaleTimeString()), 120000);
+    const interval = setInterval(
+      () => setTime(new Date().toLocaleTimeString()),
+      120000
+    );
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="mx-auto">
       <img
-        src={`https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk&time=${time}`}
+        src={`https://bppb-production.up.railway.app/court?time=${time}`}
         width={1000}
         height={500}
         alt="PB Courts"
