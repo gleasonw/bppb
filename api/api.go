@@ -57,7 +57,7 @@ func loopWeatherDataGet(weekChannel chan ForecastBatch, hourChannel chan Forecas
 	}
 }
 
-func getWeather(url string) (week ForecastBatch, hour ForecastBatch) {
+func getResponseBody(url string) []byte {
 	resp, err := http.Get(url)
 	if err != nil {
 		fmt.Println(err)
@@ -66,8 +66,13 @@ func getWeather(url string) (week ForecastBatch, hour ForecastBatch) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	return body
+}
+
+func getWeather(url string) (week ForecastBatch, hour ForecastBatch) {
+	body := getResponseBody(url)
 	var data map[string]interface{}
-	err = json.Unmarshal(body, &data)
+	err := json.Unmarshal(body, &data)
 	current := data["current"].(map[string]interface{})
 	hourly := data["hourly"].([]interface{})
 	daily := data["daily"].([]interface{})
@@ -121,16 +126,18 @@ func buildForecastPeriod(period map[string]interface{}, index int) ForecastPerio
 	return forecastPeriod
 }
 
-func download_court_image() []byte {
-	resp, err := http.Get("https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk")
-	if err != nil {
-		fmt.Println(err)
+func loopImageGet(imageChannel chan []byte) {
+	ticker := time.NewTicker(3 * time.Minute)
+	driveURL := "https://drive.google.com/uc?export=view&id=1hNQIivHi6k8yCQe3uc-J8ghBQzJqipmk"
+	image := getResponseBody(driveURL)
+	for {
+		select {
+		case <-ticker.C:
+			image = getResponseBody(driveURL)
+		case imageChannel <- image:
+			fmt.Println("Sent image")
+		}
 	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return body
 }
 
 func enableCors(w *http.ResponseWriter) {
@@ -141,9 +148,9 @@ func main() {
 	fmt.Println("Hello Railway")
 	weekChannel := make(chan ForecastBatch)
 	hourChannel := make(chan ForecastBatch)
-	var court_image []byte
-	var last_image_update time.Time
+	imageChannel := make(chan []byte)
 	go loopWeatherDataGet(weekChannel, hourChannel)
+	go loopImageGet(imageChannel)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		enableCors(&w)
@@ -163,11 +170,7 @@ func main() {
 		w.Header().Set("Content-Type", "image/png")
 		w.WriteHeader(http.StatusOK)
 
-		if court_image == nil || time.Since(last_image_update) > 2*time.Minute {
-			court_image = download_court_image()
-			last_image_update = time.Now()
-		}
-		_, err := w.Write(court_image)
+		_, err := w.Write(<-imageChannel)
 		if err != nil {
 			fmt.Println(err)
 		}
