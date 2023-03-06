@@ -128,7 +128,7 @@ func buildForecastPeriod(period map[string]interface{}, index int) ForecastPerio
 
 func loopImageGet(imageChannel chan []byte) {
 	ticker := time.NewTicker(3 * time.Minute)
-	driveURL := "https://drive.google.com/uc?export=view&id=1pwsm-3HQ0eL70Gyk1RkSWtUWJetZxIz_"
+	driveURL := "https://drive.google.com/uc?export=view&id=1Nd1V7i87F3LWgyeNimQi1H-AyOjsvCGH"
 	image := getResponseBody(driveURL)
 	for {
 		select {
