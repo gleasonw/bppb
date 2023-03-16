@@ -73,7 +73,11 @@ func getWeather(url string) (week ForecastBatch, hour ForecastBatch) {
 	body := getResponseBody(url)
 	var data map[string]interface{}
 	err := json.Unmarshal(body, &data)
-	current := data["current"].(map[string]interface{})
+	current, ok := data["current"].(map[string]interface{})
+	if !ok {
+		fmt.Println("Error retrieving current weather")
+		return week, hour
+	}
 	hourly := data["hourly"].([]interface{})
 	daily := data["daily"].([]interface{})
 	if err != nil {
