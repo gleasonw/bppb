@@ -14,7 +14,6 @@ export const PBcourts: React.FC = () => {
 
   return (
     <div className="mx-auto">
-      <span className="mx-auto p-5 text-xl">The camera feed is currently out of service -- stay tuned! </span>
       <img
         src={`https://bppb-production.up.railway.app/court?time=${time}`}
         width={1000}
