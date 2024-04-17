@@ -3,11 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/joho/godotenv"
 	"io"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 type ForecastPeriod struct {
@@ -150,23 +151,13 @@ func enableCors(w *http.ResponseWriter) {
 
 func main() {
 	fmt.Println("Hello Railway")
-	weekChannel := make(chan ForecastBatch)
-	hourChannel := make(chan ForecastBatch)
 	imageChannel := make(chan []byte)
-	go loopWeatherDataGet(weekChannel, hourChannel)
+
 	go loopImageGet(imageChannel)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		enableCors(&w)
 		fmt.Fprintf(w, "Hello Railway")
-	})
-
-	http.HandleFunc("/weather/week", func(w http.ResponseWriter, r *http.Request) {
-		getForecastAndJsonify(w, weekChannel)
-	})
-
-	http.HandleFunc("/weather/hour", func(w http.ResponseWriter, r *http.Request) {
-		getForecastAndJsonify(w, hourChannel)
 	})
 
 	http.HandleFunc("/court", func(w http.ResponseWriter, r *http.Request) {
