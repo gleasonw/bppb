@@ -4,9 +4,15 @@ import github from "./assets/github.svg";
 
 export default function Home() {
   return (
-    <div className={"flex-col flex justify-center pt-10 text-xl text-white"}>
+    <div
+      className={
+        "flex-col flex pt-10 text-xl text-white h-full justify-between"
+      }
+    >
       <PBcourts />
-      <div>Weather data temporarily out of service...</div>
+      <div className="text-center">
+        Weather data temporarily out of service...
+      </div>
       <a
         href={"https://github.com/gleasonw/bppb"}
         target={"_blank"}
