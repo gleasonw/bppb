@@ -1,6 +1,6 @@
-import PBcourts from "./components/PBcourts";
 import { Weather } from "./components/Weather";
 import github from "./assets/github.svg";
+import React from "react";
 
 export default function Home() {
   return (
@@ -10,9 +10,7 @@ export default function Home() {
       }
     >
       <PBcourts />
-      <div className="text-center">
-        Weather data temporarily out of service...
-      </div>
+      <Weather />
       <a
         href={"https://github.com/gleasonw/bppb"}
         target={"_blank"}
@@ -23,3 +21,27 @@ export default function Home() {
     </div>
   );
 }
+
+const PBcourts: React.FC = () => {
+  const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+  //ensure the image is updated every 2 minutes
+  React.useEffect(() => {
+    const interval = setInterval(
+      () => setTime(new Date().toLocaleTimeString()),
+      120000
+    );
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="mx-auto">
+      <img
+        src={`https://bppb-production.up.railway.app/court?time=${time}`}
+        width={1000}
+        height={500}
+        alt="PB Courts"
+      />
+    </div>
+  );
+};

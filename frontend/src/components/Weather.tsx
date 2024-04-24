@@ -1,61 +1,101 @@
 import React, { ReactComponentElement } from "react";
 import styles from "../Home.module.css";
-import HourForecast from "./HourForecast";
-import useWeather, { ForecastPeriod } from "./useWeather";
+import useWeather from "./useWeather";
+import {
+  BaseWeatherData,
+  DailyWeatherData,
+  HourlyWeatherData,
+  OpenWeatherResponse,
+} from "../types";
+
+function Card(props: { children: React.ReactNode }) {
+  return <div className={styles.card}>{props.children}</div>;
+}
 
 export const Weather: React.FC = () => {
-  const url = "https://bppb-production.up.railway.app/weather/week";
+  const url = "https://bppb-production.up.railway.app/weather";
   const { data, error } = useWeather(url);
 
-  if (!data)
-    return <div className="text-center">loading weather...</div>;
+  if (error) return <div>Error fetching weather</div>;
 
-  const forecast = data.properties ? data.properties.periods : [];
-  const focusForecast = forecast && forecast.length > 0 && forecast[0];
+  if (!data) return <div className="text-center">loading weather...</div>;
+
+  const hourForecast = data.hourly;
+  const dayForecast = data.daily;
+
+  const currentForecast = data.current;
 
   return (
-    <div className="flex flex-col justify-center items-center text-white">
-      {focusForecast && Object.keys(focusForecast).length > 0 && (
-        <div className={styles.card}>
-          <WeatherBrick forecast={focusForecast} />
-        </div>
+    <div className="flex flex-col justify-center gap-5 items-center text-white">
+      {currentForecast && Object.keys(currentForecast).length > 0 && (
+        <HourWeatherBrick forecast={currentForecast} />
       )}
-      <HourForecast />
+      <div className={"flex overflow-auto w-full gap-8 justify-between"}>
+        {hourForecast &&
+          hourForecast.slice(1, 10).map((forecast, i) => {
+            return <HourWeatherBrick forecast={forecast} key={i} />;
+          })}
+      </div>
       <h1 className="p-20 text-5xl">Weather for the Week</h1>
-      <div className={"flex overflow-auto w-full justify-between"}>
-        {forecast &&
-          forecast.slice(1).map((forecast) => {
-            return (
-              <div key={forecast.number} className={styles.card}>
-                <WeatherBrick forecast={forecast} />
-              </div>
-            );
+      <div className={"flex overflow-auto w-full gap-8 justify-between"}>
+        {dayForecast &&
+          dayForecast.slice(1, 10).map((forecast, i) => {
+            return <DayWeatherBrick forecast={forecast} key={i} />;
           })}
       </div>
     </div>
   );
 };
 
-export const WeatherBrick: React.FC<{ forecast: ForecastPeriod }> = ({
-  forecast,
-}) => {
-  const icon = (url: string | undefined, alt: string | undefined) => (
-    <img src={url} height={100} width={100} alt={alt} className="mx-auto" />
-  );
+export const HourWeatherBrick: React.FC<{
+  forecast: DailyWeatherData | HourlyWeatherData | BaseWeatherData;
+}> = ({ forecast }) => {
+  const weatherForHour = forecast.weather.at(0);
+  const hourFromDT = new Date(forecast.dt * 1000).toLocaleTimeString();
+
+  if (!weatherForHour) return <div>no weather for hour</div>;
+
+  const icon =
+    "https://openweathermap.org/img/wn/" + weatherForHour.icon + ".png";
+
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h1 className="text-center text-xl">{forecast.name}</h1>
-      <p className="text-center">{forecast.temperature}</p>
-      <p className="text-center">{forecast.windSpeed} mph</p>
-      <p className="text-center">{forecast.shortForecast}</p>
-      {forecast.precipitationProbability && (
-        <p className="text-center">
-          {forecast.precipitationProbability * 100}%
-        </p>
-      )}
-      {icon(forecast.icon, forecast.shortForecast)}
-    </div>
+    <Card>
+      <p className="text-center">{hourFromDT}</p>
+      <p className="text-center">{forecast.feels_like}</p>
+      <p className="text-center">{forecast.wind_speed} mph</p>
+      <img
+        src={icon}
+        height={100}
+        width={100}
+        alt={forecast.weather.at(0)?.description}
+      />
+    </Card>
   );
 };
+
+function DayWeatherBrick(props: { forecast: DailyWeatherData }) {
+  const weatherForDay = props.forecast.weather.at(0);
+  const dayFromDT = new Date(props.forecast.dt * 1000).toLocaleDateString();
+
+  if (!weatherForDay) return <div>no weather for day</div>;
+
+  const icon =
+    "https://openweathermap.org/img/wn/" + weatherForDay.icon + ".png";
+
+  return (
+    <Card>
+      <p className="text-center">{dayFromDT}</p>
+      <p className="text-center">{props.forecast.temp.day}</p>
+      <p className="text-center">{props.forecast.wind_speed} mph</p>
+      <p className="text-sm italic pt-3">{props.forecast.summary}</p>
+      <img
+        src={icon}
+        height={100}
+        width={100}
+        alt={weatherForDay.description}
+      />
+    </Card>
+  );
+}
 
 export default Weather;
