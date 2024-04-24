@@ -26,9 +26,9 @@ export const Weather: React.FC = () => {
   const currentForecast = data.current;
 
   return (
-    <div className="flex flex-col justify-center gap-5 items-center text-white">
+    <div className="flex flex-col justify-center gap-10 pt-10 items-center text-white">
       {currentForecast && Object.keys(currentForecast).length > 0 && (
-        <HourWeatherBrick forecast={currentForecast} />
+        <CurrentWeatherBrick forecast={currentForecast} />
       )}
       <div className={"flex overflow-auto w-full gap-8 justify-between"}>
         {hourForecast &&
@@ -47,8 +47,30 @@ export const Weather: React.FC = () => {
   );
 };
 
+function CurrentWeatherBrick(props: { forecast: BaseWeatherData }) {
+  const weatherForHour = props.forecast.weather.at(0);
+
+  if (!weatherForHour) return <div>no weather for hour</div>;
+
+  const icon =
+    "https://openweathermap.org/img/wn/" + weatherForHour.icon + ".png";
+
+  return (
+    <Card>
+      <p className="text-center">{props.forecast.feels_like}</p>
+      <p className="text-center">{props.forecast.wind_speed} mph</p>
+      <img
+        src={icon}
+        height={100}
+        width={100}
+        alt={props.forecast.weather.at(0)?.description}
+      />
+    </Card>
+  );
+}
+
 export const HourWeatherBrick: React.FC<{
-  forecast: DailyWeatherData | HourlyWeatherData | BaseWeatherData;
+  forecast: HourlyWeatherData;
 }> = ({ forecast }) => {
   const weatherForHour = forecast.weather.at(0);
   const hourFromDT = new Date(forecast.dt * 1000).toLocaleTimeString();
