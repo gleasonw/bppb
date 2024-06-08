@@ -127,7 +127,7 @@ func fetchDriveImage() ([]byte, error) {
 	err := error(nil)
 
 	for retries > 0 {
-		resp, err = http.Get("https://drive.google.com/uc?export=view&id=1Nd1V7i87F3LWgyeNimQi1H-AyOjsvCGH")
+		resp, err = http.Get("https://drive.google.com/uc?export=view&id=19wUlMTJDHE1tHuxpYLkgvx1OI4Omr9ye")
 
 		if err != nil {
 			fmt.Println("error fetching image, " + err.Error())
