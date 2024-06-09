@@ -1,0 +1,103 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <link href="/static/css/output.css" rel="stylesheet" />
+    <title>{{.Title}}</title>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex justify-center pt-10">
+      <div
+        class="flex flex-col bg-white rounded-lg sm:p-8 shadow-lg transition-all gap-10"
+      >
+        <img src="/court" alt="court" class="" />
+        <section class="flex gap-5 justify-between">
+          <div class="flex w-full justify-center items-center gap-5">
+            <img
+              src="http://openweathermap.org/img/wn/{{(index .Weather.Current.Weather 0).Icon}}.png"
+              alt="{{(index .Weather.Current.Weather 0).Description}}"
+            />
+            <h1 class="text-4xl font-bold">{{.Weather.Current.Temp}}</h1>
+          </div>
+          <div class="flex w-full justify-center items-center gap-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-wind"
+            >
+              <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+              <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+              <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+            </svg>
+            <h1 class="text-4xl font-bold">{{.Weather.Current.WindSpeed}}</h1>
+            <p class="text-sm pl-2">mph</p>
+          </div>
+        </section>
+        <section class="flex flex-col gap-3">
+          {{range .Weather.Hourly}}
+          <div class="grid grid-cols-2 p-4 items-center">
+            <div class="grid grid-cols-4 gap-4 items-center">
+              <div class="text-lg whitespace-nowrap" data-time="{{.DT}}"></div>
+              <img
+                src="http://openweathermap.org/img/wn/{{(index .Weather 0).Icon}}.png"
+                alt="{{(index .Weather 0).Description}}"
+                class="w-10 h-10"
+              />
+              <h1 class="text-xl font-bold">{{.Temp}}</h1>
+              <i class="hidden sm:block">{{(index .Weather 0).Description}}</i>
+            </div>
+            <div
+              class="grid grid-cols-3 sm:gap-2 gap-1 ml-auto items-center w-32"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-wind"
+              >
+                <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+                <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+                <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+              </svg>
+              <h1 class="text-xl font-bold">{{.WindSpeed}}</h1>
+              <p class="text-sm pl-2">mph</p>
+            </div>
+          </div>
+          <div class="border w-full rounded-lg opacity-50"></div>
+          {{end}}
+        </section>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const timeElements = document.querySelectorAll("[data-time]");
+        timeElements.forEach((element) => {
+          const timestamp = parseInt(element.getAttribute("data-time"), 10);
+          const date = new Date(timestamp * 1000);
+          element.textContent = date.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            hour12: true,
+          });
+        });
+      });
+
+      setInterval(() => location.reload(), 4 * 60 * 1000);
+    </script>
+  </body>
+</html>
