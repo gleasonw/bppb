@@ -20,38 +20,25 @@ type Weather struct {
 }
 
 type Current struct {
-	DT         int64     `json:"dt"`
-	Sunrise    int64     `json:"sunrise"`
-	Sunset     int64     `json:"sunset"`
-	Temp       float64   `json:"temp"`
-	FeelsLike  float64   `json:"feels_like"`
-	Pressure   int       `json:"pressure"`
-	Humidity   int       `json:"humidity"`
-	DewPoint   float64   `json:"dew_point"`
-	UVI        float64   `json:"uvi"`
-	Clouds     int       `json:"clouds"`
-	Visibility int       `json:"visibility"`
-	WindSpeed  float64   `json:"wind_speed"`
-	WindDeg    int       `json:"wind_deg"`
-	WindGust   float64   `json:"wind_gust"`
-	Weather    []Weather `json:"weather"`
+	DT        int64     `json:"dt"`
+	Temp      float64   `json:"temp"`
+	FeelsLike float64   `json:"feels_like"`
+	DewPoint  float64   `json:"dew_point"`
+	UVI       float64   `json:"uvi"`
+	WindSpeed float64   `json:"wind_speed"`
+	Weather   []Weather `json:"weather"`
 }
 
 type Hourly struct {
-	DT         int64     `json:"dt"`
-	Temp       float64   `json:"temp"`
-	FeelsLike  float64   `json:"feels_like"`
-	Pressure   int       `json:"pressure"`
-	Humidity   int       `json:"humidity"`
-	DewPoint   float64   `json:"dew_point"`
-	UVI        float64   `json:"uvi"`
-	Clouds     int       `json:"clouds"`
-	Visibility int       `json:"visibility"`
-	WindSpeed  float64   `json:"wind_speed"`
-	WindDeg    int       `json:"wind_deg"`
-	WindGust   float64   `json:"wind_gust"`
-	Weather    []Weather `json:"weather"`
-	Pop        int       `json:"pop"`
+	DT        int64     `json:"dt"`
+	Temp      float64   `json:"temp"`
+	FeelsLike float64   `json:"feels_like"`
+	DewPoint  float64   `json:"dew_point"`
+	UVI       float64   `json:"uvi"`
+	WindSpeed float64   `json:"wind_speed"`
+	WindGust  float64   `json:"wind_gust"`
+	Weather   []Weather `json:"weather"`
+	Pop       float64   `json:"pop"`
 }
 
 type Temp struct {

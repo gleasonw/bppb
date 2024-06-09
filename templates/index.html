@@ -20,9 +20,12 @@
               src="http://openweathermap.org/img/wn/{{(index .Weather.Current.Weather 0).Icon}}.png"
               alt="{{(index .Weather.Current.Weather 0).Description}}"
             />
-            <h1 class="text-4xl font-bold">{{.Weather.Current.Temp}}</h1>
+            <h1
+              class="text-4xl font-bold"
+              data-temperature="{{.Weather.Current.Temp}}"
+            ></h1>
           </div>
-          <div class="flex w-full justify-center items-center gap-5">
+          <div class="flex w-full justify-center items-center gap-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -39,21 +42,24 @@
               <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
               <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
             </svg>
-            <h1 class="text-4xl font-bold">{{.Weather.Current.WindSpeed}}</h1>
+            <h1
+              class="text-4xl font-bold"
+              data-windspeed="{{.Weather.Current.WindSpeed}}"
+            ></h1>
             <p class="text-sm pl-2">mph</p>
           </div>
         </section>
         <section class="flex flex-col gap-3">
           {{range .Weather.Hourly}}
           <div class="grid grid-cols-2 p-4 items-center">
-            <div class="grid grid-cols-4 gap-4 items-center">
+            <div class="grid grid-cols-4 gap-2 items-center">
               <div class="text-lg whitespace-nowrap" data-time="{{.DT}}"></div>
               <img
                 src="http://openweathermap.org/img/wn/{{(index .Weather 0).Icon}}.png"
                 alt="{{(index .Weather 0).Description}}"
                 class="w-10 h-10"
               />
-              <h1 class="text-xl font-bold">{{.Temp}}</h1>
+              <h1 class="text-xl font-bold" data-temperature="{{.Temp}}"></h1>
               <i class="hidden sm:block">{{(index .Weather 0).Description}}</i>
             </div>
             <div
@@ -75,8 +81,13 @@
                 <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
                 <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
               </svg>
-              <h1 class="text-xl font-bold">{{.WindSpeed}}</h1>
-              <p class="text-sm pl-2">mph</p>
+              <div class="flex gap-1 items-center">
+                <h1
+                  class="text-xl font-bold"
+                  data-windspeed="{{.WindSpeed}}"
+                ></h1>
+                <p class="text-sm pl-2">mph</p>
+              </div>
             </div>
           </div>
           <div class="border w-full rounded-lg opacity-50"></div>
@@ -101,6 +112,22 @@
             hour: "numeric",
             hour12: true,
           });
+        });
+
+        const windSpeedElements = document.querySelectorAll("[data-windspeed]");
+        const temperatureElements =
+          document.querySelectorAll("[data-temperature]");
+
+        windSpeedElements.forEach((element) => {
+          const speed = parseFloat(element.getAttribute("data-windspeed"));
+          element.textContent = Math.round(speed);
+        });
+
+        temperatureElements.forEach((element) => {
+          const temperature = parseFloat(
+            element.getAttribute("data-temperature")
+          );
+          element.textContent = Math.round(temperature);
         });
       });
 
