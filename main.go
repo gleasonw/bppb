@@ -213,7 +213,7 @@ func fetchDriveImage() ([]byte, error) {
 	err := error(nil)
 
 	for retries > 0 {
-		resp, err = http.Get("https://drive.google.com/uc?export=view&id=19wUlMTJDHE1tHuxpYLkgvx1OI4Omr9ye")
+		resp, err = http.Get("https://drive.google.com/uc?export=view&id=1Ga9-RL1Euml-5MYaL2qA2g3KgBPMGxFd")
 
 		if err != nil {
 			fmt.Println("error fetching image, " + err.Error())
@@ -287,8 +287,9 @@ func main() {
 	go loopWeatherDataGet(weatherChannel)
 	go loopImageGet(imageChannel)
 
-	// serve static css
 	http.Handle("/static/css/", http.StripPrefix("/static/css/", http.FileServer(http.Dir("static/css"))))
+
+	http.Handle("/static/scripts/", http.StripPrefix("/static/scripts/", http.FileServer(http.Dir("static/scripts"))))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		enableCors(&w)

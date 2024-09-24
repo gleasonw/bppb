@@ -13,10 +13,7 @@
           (window.vaq = window.vaq || []).push(arguments);
         };
     </script>
-    <script
-      defer
-      src="https://cdn.vercel-insights.com/_vercel/insights/script.js"
-    ></script>
+    <script defer src="/static/scripts/script.js"></script>
     <title>{{.Title}}</title>
   </head>
   <body class="bg-gray-100">
@@ -24,7 +21,17 @@
       <div
         class="flex flex-col bg-white rounded-lg sm:p-8 shadow-lg transition-all gap-10"
       >
-        <img src="/court" alt="court" class="" />
+        <div class="flex w-full flex-col">
+          <img src="/court" alt="court" class="" />
+          <a
+            href="https://drive.google.com/drive/folders/1pwsm-3HQ0eL70Gyk1RkSWtUWJetZxIz_?usp=sharing"
+            target="_blank"
+            rel="noreferrer"
+            class="text-sm text-gray-500 hover:text-gray-700 underline"
+            >Image broken? Click here to see if the source file is working.</a
+          >
+        </div>
+
         <section class="flex gap-5 justify-between">
           <div class="flex w-full justify-center items-center gap-5">
             <img
