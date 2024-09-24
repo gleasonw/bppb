@@ -289,8 +289,6 @@ func main() {
 
 	http.Handle("/static/css/", http.StripPrefix("/static/css/", http.FileServer(http.Dir("static/css"))))
 
-	http.Handle("/static/scripts/", http.StripPrefix("/static/scripts/", http.FileServer(http.Dir("static/scripts"))))
-
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		enableCors(&w)
 		indexHandler(w, weatherChannel)
