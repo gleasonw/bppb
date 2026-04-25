@@ -119,12 +119,21 @@ func loopImageGet(imageChannel chan []byte) {
 // query openweather api every 15 minutes
 func loopWeatherDataGet(weatherChannel chan PersistedWeather) {
 	ticker := time.NewTicker(15 * time.Minute)
+	defer ticker.Stop()
 
-	persistedWeather, err := getOpenWeather()
+	var (
+		persistedWeather PersistedWeather
+		err              error
+	)
 
-	if err != nil {
+	for {
+		persistedWeather, err = getOpenWeather()
+		if err == nil {
+			break
+		}
+
 		fmt.Println("error getting initial weather data, " + err.Error())
-		return
+		time.Sleep(30 * time.Second)
 	}
 
 	weatherChannel <- persistedWeather
@@ -135,8 +144,8 @@ func loopWeatherDataGet(weatherChannel chan PersistedWeather) {
 			persistedWeather, err = getOpenWeather()
 
 			if err != nil {
-				fmt.Println(err)
-				return
+				fmt.Println("error refreshing weather data, " + err.Error())
+				continue
 			}
 		case weatherChannel <- persistedWeather:
 			fmt.Println("Sent weather data")
